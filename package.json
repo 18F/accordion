@@ -1,0 +1,24 @@
+{
+  "name": "accordion",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/noahmanger/accordion.git"
+  },
+  "scripts": {
+    "build": "browserify example/init.js > example/main.js",
+    "watch": "watchify example/init.js -o example/main.js",
+    "test": "mochify tests/accordion.js"
+  },
+  "dependencies": {
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "mochify": "^2.13.0",
+    "sinon": "^1.16.1",
+    "watchify": "^3.6.1"
+  }
+}
