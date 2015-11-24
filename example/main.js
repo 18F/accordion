@@ -1571,7 +1571,7 @@ var defaultOpts = {
 
 var defaultSelectors = {
   body: '.js-accordion',
-  trigger: 'button',
+  trigger: 'button'
 };
 
 var Accordion = function(selectors, opts) {
@@ -1593,14 +1593,27 @@ var Accordion = function(selectors, opts) {
 };
 
 Accordion.prototype.findTriggers = function() {
+  var self = this;
   var triggers = this.body.querySelectorAll(this.selectors.trigger);
   var newTriggers = [];
+  var index = 0;
   _.each(triggers, function(trigger) {
+    self.setAria(trigger, index);
     newTriggers.push(trigger);
+    index++;
   });
 
   return newTriggers;
 };
+
+Accordion.prototype.setAria = function(trigger, index) {
+  var contentID = 'content-' + index;
+  var content = trigger.nextElementSibling;
+  trigger.setAttribute('aria-controls', contentID);
+  trigger.setAttribute('aria-expanded', 'false');
+  content.setAttribute('id', contentID);
+  content.setAttribute('aria-hidden', true);
+}
 
 Accordion.prototype.toggle = function(elm) {
   var button = elm;
