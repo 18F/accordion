@@ -29,12 +29,12 @@ describe('accordion', function() {
       '<div class="js-accordion">' +
         '<ul>' +
           '<li>' +
-            '<button aria-controls="content-0" aria-expanded="false"></button>' +
-            '<div id="content-0" aria-hidden="true">Some content</div>' +
+            '<button></button>' +
+            '<div>Some content</div>' +
           '</li>' +
           '<li>' +
-            '<button aria-controls="content-1" aria-expanded="true"></button>' +
-            '<div id="content-1" aria-hidden="false">Some content</div>' +
+            '<button></button>' +
+            '<div>Some content</div>' +
           '</li>' +
         '</ul>'
       '</div>'
@@ -43,6 +43,14 @@ describe('accordion', function() {
 
   it('should find triggers on init', function() {
     expect(this.accordion.triggers.length).to.equal(2);
+  });
+
+    it('should set aria attributes', function() {
+      var trigger = this.accordion.triggers[0];
+      var content = document.getElementById('content-0');
+      expect(trigger.getAttribute('aria-expanded')).to.equal('false');
+      expect(trigger.getAttribute('aria-controls')).to.equal('content-0');
+      expect(content.getAttribute('aria-hidden')).to.equal('true');
   });
 
   it('should expand the item on click', function() {
