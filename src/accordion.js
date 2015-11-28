@@ -26,9 +26,6 @@ var Accordion = function(selectors, opts) {
 
 Accordion.prototype.handleClickBody = function(e) {
   if (_.contains(this.triggers, e.target)) {
-    if (this.opts.collapseOthers) {
-      this.collapseAll();
-    }
     this.toggle(e.target);
   }
 };
@@ -57,6 +54,9 @@ Accordion.prototype.toggle = function(elm) {
 };
 
 Accordion.prototype.expand = function(button) {
+  if (this.opts.collapseOthers) {
+    this.collapseAll();
+  }
   var content = document.querySelector('#' + button.getAttribute('aria-controls'));
   button.setAttribute('aria-expanded', 'true');
   button.classList.add(this.opts.classes.expandedButton);
@@ -72,7 +72,7 @@ Accordion.prototype.collapse = function(button) {
 
 Accordion.prototype.collapseAll = function() {
   var self = this;
-  this.triggers.forEach(function(trigger) {
+  _.each(this.triggers, function(trigger) {
     self.collapse(trigger);
   });
 };

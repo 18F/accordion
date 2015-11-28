@@ -64,4 +64,12 @@ describe('accordion', function() {
     this.accordion.collapse(trigger);
     expect(isClosed(trigger, this.accordion)).to.be.true;
   });
+
+  it('should collapse others on expand', function() {
+    var accordion = new Accordion({}, {collapseOthers: true});
+    accordion.expand(accordion.triggers[0]);
+    accordion.expand(accordion.triggers[1]);
+    expect(isClosed(accordion.triggers[0], accordion)).to.be.true;
+    expect(isOpen(accordion.triggers[1], accordion)).to.be.true;
+  });
 });
