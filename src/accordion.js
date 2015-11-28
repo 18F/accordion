@@ -53,7 +53,7 @@ Accordion.prototype.setAria = function(trigger, index) {
   trigger.setAttribute('aria-expanded', 'false');
   content.setAttribute('id', contentID);
   content.setAttribute('aria-hidden', true);
-}
+};
 
 Accordion.prototype.toggle = function(elm) {
   var button = elm;
@@ -89,4 +89,4 @@ Accordion.prototype.expandAll = function() {
   });
 };
 
-module.exports = {Accordion: Accordion};
+module.exports = Accordion;
