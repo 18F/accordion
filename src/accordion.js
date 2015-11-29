@@ -21,7 +21,8 @@ var Accordion = function(selectors, opts) {
   this.body = document.querySelector(this.selectors.body);
   this.triggers = this.findTriggers();
 
-  this.body.addEventListener('click', this.handleClickBody.bind(this));
+  this.listeners = [];
+  this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
 };
 
 Accordion.prototype.handleClickBody = function(e) {
@@ -81,6 +82,23 @@ Accordion.prototype.expandAll = function() {
   var self = this;
   this.triggers.forEach(function(trigger) {
     self.expand(trigger);
+  });
+};
+
+Accordion.prototype.addEventListener = function(elm, event, callback) {
+  if (elm) {
+    elm.addEventListener(event, callback);
+    this.listeners.push({
+      elm: elm,
+      event: event,
+      callback: callback
+    });
+  }
+};
+
+Accordion.prototype.destroy = function() {
+  this.listeners.forEach(function(listener) {
+    listener.elm.removeEventListener(listener.event, listener.callback);
   });
 };
 

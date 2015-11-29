@@ -72,4 +72,11 @@ describe('accordion', function() {
     expect(isClosed(accordion.triggers[0], accordion)).to.be.true;
     expect(isOpen(accordion.triggers[1], accordion)).to.be.true;
   });
+
+  it('removes listeners on destroy', function() {
+    this.accordion.destroy();
+    var trigger = this.accordion.triggers[0];
+    trigger.click();
+    expect(isOpen(trigger, this.accordion)).to.be.false;
+  });
 });
