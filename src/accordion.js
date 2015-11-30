@@ -15,35 +15,29 @@ var defaultSelectors = {
 };
 
 var Accordion = function(selectors, opts) {
-  var self = this;
-  self.selectors = _.extend({}, defaultSelectors, selectors);
-  self.opts = _.extend({}, defaultOpts, opts);
+  this.selectors = _.extend({}, defaultSelectors, selectors);
+  this.opts = _.extend({}, defaultOpts, opts);
 
-  self.body = document.querySelector(this.selectors.body);
-  self.triggers = self.findTriggers();
+  this.body = document.querySelector(this.selectors.body);
+  this.triggers = this.findTriggers();
 
-  self.body.addEventListener('click', function(e) {
-    if ( _.contains(self.triggers, e.target) ) {
-      if (self.opts.collapseOthers) {
-        self.collapseAll();
-      }
-      self.toggle(e.target);
-    }
-  });
+  this.listeners = [];
+  this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
+};
+
+Accordion.prototype.handleClickBody = function(e) {
+  if (_.contains(this.triggers, e.target)) {
+    this.toggle(e.target);
+  }
 };
 
 Accordion.prototype.findTriggers = function() {
   var self = this;
   var triggers = this.body.querySelectorAll(this.selectors.trigger);
-  var newTriggers = [];
-  var index = 0;
-  _.each(triggers, function(trigger) {
+  _.each(triggers, function(trigger, index) {
     self.setAria(trigger, index);
-    newTriggers.push(trigger);
-    index++;
   });
-
-  return newTriggers;
+  return triggers;
 };
 
 Accordion.prototype.setAria = function(trigger, index) {
@@ -52,16 +46,18 @@ Accordion.prototype.setAria = function(trigger, index) {
   trigger.setAttribute('aria-controls', contentID);
   trigger.setAttribute('aria-expanded', 'false');
   content.setAttribute('id', contentID);
-  content.setAttribute('aria-hidden', true);
-}
+  content.setAttribute('aria-hidden', 'true');
+};
 
 Accordion.prototype.toggle = function(elm) {
-  var button = elm;
   var f = elm.getAttribute('aria-expanded') === 'true' ? this.collapse : this.expand;
-  f.call(this, button);
+  f.call(this, elm);
 };
 
 Accordion.prototype.expand = function(button) {
+  if (this.opts.collapseOthers) {
+    this.collapseAll();
+  }
   var content = document.querySelector('#' + button.getAttribute('aria-controls'));
   button.setAttribute('aria-expanded', 'true');
   button.classList.add(this.opts.classes.expandedButton);
@@ -77,7 +73,7 @@ Accordion.prototype.collapse = function(button) {
 
 Accordion.prototype.collapseAll = function() {
   var self = this;
-  this.triggers.forEach(function(trigger) {
+  _.each(this.triggers, function(trigger) {
     self.collapse(trigger);
   });
 };
@@ -89,4 +85,21 @@ Accordion.prototype.expandAll = function() {
   });
 };
 
-module.exports = {Accordion: Accordion};
+Accordion.prototype.addEventListener = function(elm, event, callback) {
+  if (elm) {
+    elm.addEventListener(event, callback);
+    this.listeners.push({
+      elm: elm,
+      event: event,
+      callback: callback
+    });
+  }
+};
+
+Accordion.prototype.destroy = function() {
+  this.listeners.forEach(function(listener) {
+    listener.elm.removeEventListener(listener.event, listener.callback);
+  });
+};
+
+module.exports = Accordion;

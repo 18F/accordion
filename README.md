@@ -1,9 +1,13 @@
 # accordion
-A simple, 508 compliant JavaScript accordion for use in 18F projects.
+
+[![Build Status](https://img.shields.io/travis/18F/accordion/master.svg)](https://travis-ci.org/18F/accordion)
+[![Test Coverage](https://img.shields.io/codecov/c/github/18F/accordion/master.svg)](https://codecov.io/github/18F/accordion)
+
+A simple, 508 compliant JavaScript accordion.
 
 A work in progress.
 
-### Public domain
+## Public domain
 
 This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
 
