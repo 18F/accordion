@@ -58,14 +58,14 @@ Accordion.prototype.expand = function(button) {
   if (this.opts.collapseOthers) {
     this.collapseAll();
   }
-  var content = document.querySelector('#' + button.getAttribute('aria-controls'));
+  var content = document.getElementById(button.getAttribute('aria-controls'));
   button.setAttribute('aria-expanded', 'true');
   button.classList.add(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'false');
 };
 
 Accordion.prototype.collapse = function(button) {
-  var content = document.querySelector('#' + button.getAttribute('aria-controls'));
+  var content = document.getElementById(button.getAttribute('aria-controls'));
   button.setAttribute('aria-expanded', 'false');
   button.classList.remove(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'true');
