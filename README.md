@@ -1,4 +1,4 @@
-# accordion
+# 18F Simple Accordion
 
 [![Build Status](https://img.shields.io/travis/18F/accordion/master.svg)](https://travis-ci.org/18F/accordion)
 [![Test Coverage](https://img.shields.io/codecov/c/github/18F/accordion/master.svg)](https://codecov.io/github/18F/accordion)
