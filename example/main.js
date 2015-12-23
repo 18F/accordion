@@ -1,9 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var Accordion = require('..');
+var accordion = require('..');
 
-new Accordion();
+new accordion.Accordion();
 
 },{"..":3}],2:[function(require,module,exports){
 //     Underscore.js 1.8.3
@@ -1562,6 +1562,7 @@ var _ = require('underscore');
 
 var defaultOpts = {
   collapseOthers: false,
+  customHiding: false,
   classes: {
     expandedButton: 'accordion-trigger--expanded'
   }
@@ -1579,7 +1580,8 @@ var Accordion = function(selectors, opts) {
   this.body = document.querySelector(this.selectors.body);
   this.triggers = this.findTriggers();
 
-  this.body.addEventListener('click', this.handleClickBody.bind(this));
+  this.listeners = [];
+  this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
 };
 
 Accordion.prototype.handleClickBody = function(e) {
@@ -1604,6 +1606,7 @@ Accordion.prototype.setAria = function(trigger, index) {
   trigger.setAttribute('aria-expanded', 'false');
   content.setAttribute('id', contentID);
   content.setAttribute('aria-hidden', 'true');
+  this.setStyles(content);
 };
 
 Accordion.prototype.toggle = function(elm) {
@@ -1619,6 +1622,7 @@ Accordion.prototype.expand = function(button) {
   button.setAttribute('aria-expanded', 'true');
   button.classList.add(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'false');
+  this.setStyles(content);
 };
 
 Accordion.prototype.collapse = function(button) {
@@ -1626,6 +1630,7 @@ Accordion.prototype.collapse = function(button) {
   button.setAttribute('aria-expanded', 'false');
   button.classList.remove(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'true');
+  this.setStyles(content);
 };
 
 Accordion.prototype.collapseAll = function() {
@@ -1642,6 +1647,31 @@ Accordion.prototype.expandAll = function() {
   });
 };
 
-module.exports = Accordion;
+Accordion.prototype.setStyles = function(content) {
+  var prop = content.getAttribute('aria-hidden') === 'true' ? 'none' : 'block';
+
+  if (!this.opts.customHiding) {
+    content.style.display = prop;
+  };
+};
+
+Accordion.prototype.addEventListener = function(elm, event, callback) {
+  if (elm) {
+    elm.addEventListener(event, callback);
+    this.listeners.push({
+      elm: elm,
+      event: event,
+      callback: callback
+    });
+  }
+};
+
+Accordion.prototype.destroy = function() {
+  this.listeners.forEach(function(listener) {
+    listener.elm.removeEventListener(listener.event, listener.callback);
+  });
+};
+
+module.exports = { Accordion: Accordion };
 
 },{"underscore":2}]},{},[1]);

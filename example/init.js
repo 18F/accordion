@@ -1,5 +1,5 @@
 'use strict';
 
-var Accordion = require('..');
+var accordion = require('..');
 
-new Accordion();
+new accordion.Accordion();

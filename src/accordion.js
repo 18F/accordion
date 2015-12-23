@@ -4,6 +4,7 @@ var _ = require('underscore');
 
 var defaultOpts = {
   collapseOthers: false,
+  customHiding: false,
   classes: {
     expandedButton: 'accordion-trigger--expanded'
   }
@@ -47,6 +48,7 @@ Accordion.prototype.setAria = function(trigger, index) {
   trigger.setAttribute('aria-expanded', 'false');
   content.setAttribute('id', contentID);
   content.setAttribute('aria-hidden', 'true');
+  this.setStyles(content);
 };
 
 Accordion.prototype.toggle = function(elm) {
@@ -62,6 +64,7 @@ Accordion.prototype.expand = function(button) {
   button.setAttribute('aria-expanded', 'true');
   button.classList.add(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'false');
+  this.setStyles(content);
 };
 
 Accordion.prototype.collapse = function(button) {
@@ -69,6 +72,7 @@ Accordion.prototype.collapse = function(button) {
   button.setAttribute('aria-expanded', 'false');
   button.classList.remove(this.opts.classes.expandedButton);
   content.setAttribute('aria-hidden', 'true');
+  this.setStyles(content);
 };
 
 Accordion.prototype.collapseAll = function() {
@@ -83,6 +87,14 @@ Accordion.prototype.expandAll = function() {
   this.triggers.forEach(function(trigger) {
     self.expand(trigger);
   });
+};
+
+Accordion.prototype.setStyles = function(content) {
+  var prop = content.getAttribute('aria-hidden') === 'true' ? 'none' : 'block';
+
+  if (!this.opts.customHiding) {
+    content.style.display = prop;
+  };
 };
 
 Accordion.prototype.addEventListener = function(elm, event, callback) {
@@ -102,4 +114,4 @@ Accordion.prototype.destroy = function() {
   });
 };
 
-module.exports = Accordion;
+module.exports = { Accordion: Accordion };
