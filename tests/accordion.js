@@ -3,7 +3,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-var Accordion = require('../src/accordion');
+var Accordion = require('../src/accordion').Accordion;
 
 function isOpen(trigger, accordion) {
   return trigger.getAttribute('aria-expanded') === 'true' &&
@@ -51,6 +51,14 @@ describe('accordion', function() {
     expect(trigger.getAttribute('aria-expanded')).to.equal('false');
     expect(trigger.getAttribute('aria-controls')).to.equal('content-0');
     expect(content.getAttribute('aria-hidden')).to.equal('true');
+  });
+
+  it('should set styles to display: none', function() {
+    var trigger = this.accordion.triggers[0];
+    var content = document.getElementById('content-0');
+    expect(content.style.display).to.equal('none');
+    this.accordion.expand(trigger);
+    expect(content.style.display).to.equal('block');
   });
 
   it('should expand the item on click', function() {

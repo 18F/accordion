@@ -1,14 +1,14 @@
 {
-  "name": "accordion",
+  "name": "@18f/accordion",
+  "author": "18F",
   "version": "0.1.0",
-  "description": "",
+  "description": "18F Simple Accordion",
   "repository": {
     "type": "git",
     "url": "git://github.com/18F/accordion.git"
   },
   "scripts": {
     "build": "browserify example/init.js > example/main.js",
-    "watch": "watchify example/init.js -o example/main.js",
     "test": "mochify tests/accordion.js"
   },
   "main": "src/accordion.js",
@@ -18,7 +18,9 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
-    "mochify": "^2.13.0",
-    "watchify": "^3.6.1"
+    "mochify": "^2.13.0"
+  },
+  "bugs": {
+    "url": "https://github.com/18f/accordion/issues"
   }
 }
