@@ -5,6 +5,7 @@ var _ = require('underscore');
 var defaultOpts = {
   collapseOthers: false,
   customHiding: false,
+  contentPrefix: 'accordion',
 };
 
 var defaultSelectors = {
@@ -39,7 +40,7 @@ Accordion.prototype.findTriggers = function() {
 };
 
 Accordion.prototype.setAria = function(trigger, index) {
-  var contentID = 'content-' + index;
+  var contentID = this.opts.contentPrefix + '-' + 'content-' + index;
   var content = trigger.nextElementSibling;
   trigger.setAttribute('aria-controls', contentID);
   trigger.setAttribute('aria-expanded', 'false');

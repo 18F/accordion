@@ -4,7 +4,7 @@
 [![Test Coverage](https://img.shields.io/codecov/c/github/18F/accordion/master.svg)](https://codecov.io/github/18F/accordion)
 
 # About
-A simple, accessible, 508-compliant JavaScript accordion. 
+A simple, accessible, 508-compliant JavaScript accordion.
 
 # Getting started
 ## Download
@@ -68,6 +68,7 @@ You can also pass a hash of options. Currently, the only option is:
 
 - `collapseOthers`: Boolean for whether or not to collapse all other panels when one panel is open. _Default_: `false`
 - `customHiding`: Boolean for whether or not to use your own CSS to hide collapsed content areas. _Default_: `false`
+- 'contentPrefix': String prefix for the content div IDs in order to have multiple accordions on the same page. _Default_: `accordion`
 
 # Styling
 You're free to add classes and style your markup however you please. By default, the component sets any content element with `[aria-hidden="true"]` to `display: none` inline, but you can override this to use your own custom hiding styles with the `customHiding` property. To style the buttons when they panel is open vs closed, target `[aria-expanded="true"]`.
