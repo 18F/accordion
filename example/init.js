@@ -2,4 +2,4 @@
 
 var accordion = require('..');
 
-new accordion.Accordion();
+new accordion.Accordion({}, {openFirst: true});

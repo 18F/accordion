@@ -6,6 +6,7 @@ var defaultOpts = {
   collapseOthers: false,
   customHiding: false,
   contentPrefix: 'accordion',
+  openFirst: false
 };
 
 var defaultSelectors = {
@@ -22,6 +23,10 @@ var Accordion = function(selectors, opts) {
 
   this.listeners = [];
   this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
+
+  if (this.opts.openFirst) {
+    this.expand(this.triggers[0]);
+  }
 };
 
 Accordion.prototype.handleClickBody = function(e) {
