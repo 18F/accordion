@@ -40,7 +40,7 @@ npm install @18f/accordion
    </ul>
 ```
 
-Simply create a series of `<button>` elements followed by `<div>`s and this will take care of the rest, adding the proper ARIA attributes.
+Simply create a series of `<button>` elements followed by `<div>`s and this will take care of the rest, adding the proper ARIA attributes. You can add custom IDs to the `<div>`s and the library will default to those. If you don't add IDs the library will generate them for you.
 
 
 ## Initialize
