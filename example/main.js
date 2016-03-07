@@ -1603,11 +1603,18 @@ Accordion.prototype.findTriggers = function() {
 };
 
 Accordion.prototype.setAria = function(trigger, index) {
-  var contentID = this.opts.contentPrefix + '-' + 'content-' + index;
   var content = trigger.nextElementSibling;
+  var contentID;
+
+  if (content.hasAttribute('id')) {
+    contentID = content.getAttribute('id');
+  } else {
+    contentID = this.opts.contentPrefix + '-' + 'content-' + index;
+    content.setAttribute('id', contentID);
+  }
+
   trigger.setAttribute('aria-controls', contentID);
   trigger.setAttribute('aria-expanded', 'false');
-  content.setAttribute('id', contentID);
   content.setAttribute('aria-hidden', 'true');
   this.setStyles(content);
 };
