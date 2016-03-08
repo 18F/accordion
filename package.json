@@ -1,8 +1,8 @@
 {
-  "name": "accordion",
+  "name": "aria-accordion",
   "author": "18F",
   "version": "0.1.0",
-  "description": "18F Simple Accordion",
+  "description": "A simple, accessible, ARIA accordion",
   "repository": {
     "type": "git",
     "url": "git://github.com/18F/accordion.git"
