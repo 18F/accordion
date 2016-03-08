@@ -3,7 +3,7 @@
 
 var accordion = require('..');
 
-new accordion.Accordion();
+new accordion.Accordion({}, {openFirst: true});
 
 },{"..":3}],2:[function(require,module,exports){
 //     Underscore.js 1.8.3
@@ -1563,6 +1563,8 @@ var _ = require('underscore');
 var defaultOpts = {
   collapseOthers: false,
   customHiding: false,
+  contentPrefix: 'accordion',
+  openFirst: false
 };
 
 var defaultSelectors = {
@@ -1579,6 +1581,10 @@ var Accordion = function(selectors, opts) {
 
   this.listeners = [];
   this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
+
+  if (this.opts.openFirst) {
+    this.expand(this.triggers[0]);
+  }
 };
 
 Accordion.prototype.handleClickBody = function(e) {
@@ -1597,11 +1603,18 @@ Accordion.prototype.findTriggers = function() {
 };
 
 Accordion.prototype.setAria = function(trigger, index) {
-  var contentID = 'content-' + index;
   var content = trigger.nextElementSibling;
+  var contentID;
+
+  if (content.hasAttribute('id')) {
+    contentID = content.getAttribute('id');
+  } else {
+    contentID = this.opts.contentPrefix + '-' + 'content-' + index;
+    content.setAttribute('id', contentID);
+  }
+
   trigger.setAttribute('aria-controls', contentID);
   trigger.setAttribute('aria-expanded', 'false');
-  content.setAttribute('id', contentID);
   content.setAttribute('aria-hidden', 'true');
   this.setStyles(content);
 };

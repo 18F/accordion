@@ -7,13 +7,11 @@ var Accordion = require('../src/accordion').Accordion;
 
 function isOpen(trigger, accordion) {
   return trigger.getAttribute('aria-expanded') === 'true' &&
-    trigger.classList.contains(accordion.opts.classes.expandedButton) &&
     document.querySelector('#' + trigger.getAttribute('aria-controls')).getAttribute('aria-hidden') === 'false';
 }
 
 function isClosed(trigger, accordion) {
   return trigger.getAttribute('aria-expanded') === 'false' &&
-    !trigger.classList.contains(accordion.opts.classes.expandedButton) &&
     document.querySelector('#' + trigger.getAttribute('aria-controls')).getAttribute('aria-hidden') === 'true';
 }
 
@@ -47,15 +45,15 @@ describe('accordion', function() {
 
   it('should set aria attributes', function() {
     var trigger = this.accordion.triggers[0];
-    var content = document.getElementById('content-0');
+    var content = document.getElementById('accordion-content-0');
     expect(trigger.getAttribute('aria-expanded')).to.equal('false');
-    expect(trigger.getAttribute('aria-controls')).to.equal('content-0');
+    expect(trigger.getAttribute('aria-controls')).to.equal('accordion-content-0');
     expect(content.getAttribute('aria-hidden')).to.equal('true');
   });
 
   it('should set styles to display: none', function() {
     var trigger = this.accordion.triggers[0];
-    var content = document.getElementById('content-0');
+    var content = document.getElementById('accordion-content-0');
     expect(content.style.display).to.equal('none');
     this.accordion.expand(trigger);
     expect(content.style.display).to.equal('block');
