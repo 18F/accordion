@@ -1,16 +1,16 @@
-# 18F Simple Accordion
+# 18F Aria-Accordion
 
 [![Build Status](https://img.shields.io/travis/18F/accordion/master.svg)](https://travis-ci.org/18F/accordion)
 [![Test Coverage](https://img.shields.io/codecov/c/github/18F/accordion/master.svg)](https://codecov.io/github/18F/accordion)
 
 # About
-A simple, accessible, 508-compliant JavaScript accordion.
+A simple, accessible JavaScript accordion.
 
 # Getting started
 ## Download
-### Via npm (coming soon)
+### Via npm
 ```
-npm install @18f/accordion
+npm install aria-accordion
 ```
 
 ## Set up your HTML
