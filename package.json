@@ -1,6 +1,10 @@
 {
   "name": "aria-accordion",
   "author": "18F",
+  "contributors": [
+    "Josh Carp <joshua.carp@gsa.gov>",
+    "Noah Manger <noah.manger@gsa.gov"
+  ],
   "version": "0.1.0",
   "description": "A simple, accessible, ARIA accordion",
   "repository": {
