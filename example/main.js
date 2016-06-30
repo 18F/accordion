@@ -1588,8 +1588,17 @@ var Accordion = function(selectors, opts) {
 };
 
 Accordion.prototype.handleClickBody = function(e) {
+  // If the target is the button, toggle the button
+  // Else see if the target is a child of a button
   if (_.contains(this.triggers, e.target)) {
     this.toggle(e.target);
+  } else {
+    var self = this;
+    this.triggers.forEach(function(trigger){
+      if (e.target.parentElement === trigger) {
+        self.toggle(trigger);
+      }
+    })
   }
 };
 
