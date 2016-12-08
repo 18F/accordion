@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('underscore');
+var extend = require('./util').extend;
 
 var defaultOpts = {
   collapseOthers: false,
@@ -15,8 +15,8 @@ var defaultSelectors = {
 };
 
 var Accordion = function(selectors, opts) {
-  this.selectors = _.extend({}, defaultSelectors, selectors);
-  this.opts = _.extend({}, defaultOpts, opts);
+  this.selectors = extend({}, defaultSelectors, selectors);
+  this.opts = extend({}, defaultOpts, opts);
 
   this.body = document.querySelector(this.selectors.body);
   this.triggers = this.findTriggers();
@@ -32,7 +32,7 @@ var Accordion = function(selectors, opts) {
 Accordion.prototype.handleClickBody = function(e) {
   // If the target is the button, toggle the button
   // Else see if the target is a child of a button
-  if (_.contains(this.triggers, e.target)) {
+  if (this.triggers.indexOf(e.target) > -1) {
     this.toggle(e.target);
   } else {
     var self = this;
@@ -46,8 +46,8 @@ Accordion.prototype.handleClickBody = function(e) {
 
 Accordion.prototype.findTriggers = function() {
   var self = this;
-  var triggers = this.body.querySelectorAll(this.selectors.trigger);
-  _.each(triggers, function(trigger, index) {
+  var triggers = [].slice.call(this.body.querySelectorAll(this.selectors.trigger));
+  triggers.forEach(function(trigger, index) {
     self.setAria(trigger, index);
   });
   return triggers;
@@ -94,7 +94,7 @@ Accordion.prototype.collapse = function(button) {
 
 Accordion.prototype.collapseAll = function() {
   var self = this;
-  _.each(this.triggers, function(trigger) {
+  this.triggers.forEach(function(trigger) {
     self.collapse(trigger);
   });
 };
