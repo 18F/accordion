@@ -3,6 +3,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 
+var extend = require('../src/util').extend;
 var Accordion = require('../src/accordion').Accordion;
 
 function isOpen(trigger, accordion) {
@@ -14,6 +15,18 @@ function isClosed(trigger, accordion) {
   return trigger.getAttribute('aria-expanded') === 'false' &&
     document.querySelector('#' + trigger.getAttribute('aria-controls')).getAttribute('aria-hidden') === 'true';
 }
+
+describe('extend function', function() {
+  it('should copy props in source objs to dest obj', function() {
+    var obj = extend({}, {foo: 1}, {bar: 2});
+    expect(obj).to.deep.equal({foo: 1, bar: 2});
+  });
+
+  it('should use prop vals in later sources if same name', function() {
+    var obj = extend({}, {foo: 1}, {foo: 2});
+    expect(obj).to.deep.equal({foo: 2});
+  });
+});
 
 describe('accordion', function() {
   before(function() {
