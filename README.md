@@ -15,7 +15,7 @@ npm install aria-accordion
 
 ## Set up your HTML
 
-```
+```html
 	<ul class="js-accordion">
 	    <li>
 	      <button>
@@ -46,7 +46,7 @@ Simply create a series of `<button>` elements followed by `<div>`s and this will
 ## Initialize
 In whichever file you initialize your JavaScript components, initialize the accordion like so:
 
-```
+```js
 	var accordion = require('@18f/accordion');
 
 	// Optional configurion objects
