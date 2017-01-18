@@ -6,12 +6,12 @@ var expect = chai.expect;
 var extend = require('../src/util').extend;
 var Accordion = require('../src/accordion').Accordion;
 
-function isOpen(trigger, accordion) {
+function isOpen(trigger) {
   return trigger.getAttribute('aria-expanded') === 'true' &&
     document.querySelector('#' + trigger.getAttribute('aria-controls')).getAttribute('aria-hidden') === 'false';
 }
 
-function isClosed(trigger, accordion) {
+function isClosed(trigger) {
   return trigger.getAttribute('aria-expanded') === 'false' &&
     document.querySelector('#' + trigger.getAttribute('aria-controls')).getAttribute('aria-hidden') === 'true';
 }
