@@ -16,7 +16,7 @@ var defaultSelectors = {
 /**
  * Creates a new accordion component
  * @constructor
- * @param {object} elm - The element that contains the entire accordion
+ * @param {Element} elm - The element that contains the entire accordion
  * @param {object} selectors - Selectors for locating DOM elements
  * @param {object} opts - Options for configuring behavior
  */

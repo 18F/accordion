@@ -37,7 +37,7 @@ describe('accordion', function() {
 
   beforeEach(function() {
     this.fixture.innerHTML =
-      '<div class="js-accordion">' +
+      '<div class="accordion-1">' +
         '<ul>' +
           '<li>' +
             '<button></button>' +
@@ -48,8 +48,15 @@ describe('accordion', function() {
             '<div>Some content</div>' +
           '</li>' +
         '</ul>' +
+      '</div>' +
+      '<div class="accordion-2">' +
+        '<button>Accordion 2 button</button>' +
+        '<div>Some content</div>' +
       '</div>';
-    this.accordion = new Accordion();
+    var elm1 = document.querySelector('.accordion-1');
+    var elm2 = document.querySelector('.accordion-2');
+    this.accordion = new Accordion(elm1, {}, {collapseOthers: true});
+    this.accordion2 = new Accordion(elm2, {}, {contentPrefix: 'second'});
   });
 
   it('should find triggers on init', function() {
@@ -75,7 +82,7 @@ describe('accordion', function() {
   it('should expand the item on click', function() {
     var trigger = this.accordion.triggers[0];
     this.accordion.expand(trigger);
-    expect(isOpen(trigger, this.accordion)).to.be.true;
+    expect(isOpen(trigger)).to.be.true;
   });
 
   it('should collapse an open item when clicking', function() {
@@ -85,11 +92,10 @@ describe('accordion', function() {
   });
 
   it('should collapse others on expand', function() {
-    var accordion = new Accordion({}, {collapseOthers: true});
-    accordion.expand(accordion.triggers[0]);
-    accordion.expand(accordion.triggers[1]);
-    expect(isClosed(accordion.triggers[0], accordion)).to.be.true;
-    expect(isOpen(accordion.triggers[1], accordion)).to.be.true;
+    this.accordion.expand(this.accordion.triggers[0]);
+    this.accordion.expand(this.accordion.triggers[1]);
+    expect(isClosed(this.accordion.triggers[0])).to.be.true;
+    expect(isOpen(this.accordion.triggers[1])).to.be.true;
   });
 
   it('removes listeners on destroy', function() {
@@ -97,5 +103,19 @@ describe('accordion', function() {
     var trigger = this.accordion.triggers[0];
     trigger.click();
     expect(isOpen(trigger, this.accordion)).to.be.false;
+  });
+
+  describe('page with multiple accordions', function() {
+    it('should find the one trigger', function() {
+      expect(this.accordion2.triggers.length).to.equal(1);
+    });
+
+    it('should expand the content for this accordion but not the other', function() {
+      var trigger1 = this.accordion.triggers[0];
+      var trigger2 = this.accordion2.triggers[0];
+      this.accordion2.expand(trigger2);
+      expect(isOpen(trigger2)).to.be.true;
+      expect(isOpen(trigger1)).to.be.false;
+    });
   });
 });
