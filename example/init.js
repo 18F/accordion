@@ -2,4 +2,6 @@
 
 var accordion = require('..');
 
-new accordion.Accordion({}, {openFirst: true});
+var accordionElement = document.querySelector('.js-accordion');
+
+new accordion.Accordion(accordionElement, {}, {openFirst: true});

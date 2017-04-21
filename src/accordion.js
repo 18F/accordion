@@ -10,26 +10,33 @@ var defaultOpts = {
 };
 
 var defaultSelectors = {
-  body: '.js-accordion',
   trigger: 'button'
 };
 
-var Accordion = function(selectors, opts) {
+/**
+ * Creates a new accordion component
+ * @constructor
+ * @param {Element} elm - The element that contains the entire accordion
+ * @param {object} selectors - Selectors for locating DOM elements
+ * @param {object} opts - Options for configuring behavior
+ */
+
+var Accordion = function(elm, selectors, opts) {
+  this.elm = elm;
   this.selectors = extend({}, defaultSelectors, selectors);
   this.opts = extend({}, defaultOpts, opts);
 
-  this.body = document.querySelector(this.selectors.body);
   this.triggers = this.findTriggers();
 
   this.listeners = [];
-  this.addEventListener(this.body, 'click', this.handleClickBody.bind(this));
+  this.addEventListener(this.elm, 'click', this.handleClickElm.bind(this));
 
   if (this.opts.openFirst) {
     this.expand(this.triggers[0]);
   }
 };
 
-Accordion.prototype.handleClickBody = function(e) {
+Accordion.prototype.handleClickElm = function(e) {
   // If the target is the button, toggle the button
   // Else see if the target is a child of a button
   if (this.triggers.indexOf(e.target) > -1) {
@@ -40,13 +47,13 @@ Accordion.prototype.handleClickBody = function(e) {
       if (e.target.parentElement === trigger) {
         self.toggle(trigger);
       }
-    })
+    });
   }
 };
 
 Accordion.prototype.findTriggers = function() {
   var self = this;
-  var triggers = [].slice.call(this.body.querySelectorAll(this.selectors.trigger));
+  var triggers = [].slice.call(this.elm.querySelectorAll(this.selectors.trigger));
   triggers.forEach(function(trigger, index) {
     self.setAria(trigger, index);
   });
@@ -111,7 +118,7 @@ Accordion.prototype.setStyles = function(content) {
 
   if (!this.opts.customHiding) {
     content.style.display = prop;
-  };
+  }
 };
 
 Accordion.prototype.addEventListener = function(elm, event, callback) {

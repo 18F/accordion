@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "browserify example/init.js > example/main.js",
-    "test": "mochify tests/accordion.js"
+    "test": "mochify test/accordion.js"
   },
   "main": "src/accordion.js",
   "dependencies": {},

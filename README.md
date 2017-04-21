@@ -49,18 +49,21 @@ In whichever file you initialize your JavaScript components, initialize the acco
 ```js
 	var accordion = require('@18f/accordion');
 
+	// Required element to turn into an accordion
+	var elm = document.querySelector('.js-accordion');
+
 	// Optional configurion objects
 	var selectors = { ... };
 	var opts = { ... };
 
-	new accordion.Accordion(selectors, opts);
+	new accordion.Accordion(elm, selectors, opts);
 ```
 
 
 # Configuration
-The constructor accepts an optional hash of selectors as its first parameter:
+The constructor requires an HTML element to turn into the accordion.
 
-- `body`: CSS selector of the outer element that contains the accordion items. _Default_: `.js-accordion`
+The constructor accepts an optional hash of selectors as its second parameter:
 
 - `trigger`: CSS selector for the elements to turn into the accordion triggers. The component will look for these items' next sibling to turn into the accordion content that is hidden and revealed. _Default_: `button`
 
