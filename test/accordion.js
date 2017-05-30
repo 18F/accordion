@@ -70,7 +70,7 @@ describe('accordion', function() {
     var elm3 = document.querySelector('.accordion-3');
     this.accordion = new Accordion(elm1, {}, {collapseOthers: true});
     this.accordion2 = new Accordion(elm2, {}, {contentPrefix: 'second'});
-    this.accordion3 = new Accordion(elm3, {}, {overrideStatic: true});
+    this.accordion3 = new Accordion(elm3, {}, {reflectStatic: true});
   });
 
   it('should find triggers on init', function() {

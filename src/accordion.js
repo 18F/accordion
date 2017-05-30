@@ -7,7 +7,7 @@ var defaultOpts = {
   customHiding: false,
   contentPrefix: 'accordion',
   openFirst: false,
-  overrideStatic: false
+  reflectStatic: false
 };
 
 var defaultSelectors = {
@@ -74,7 +74,7 @@ Accordion.prototype.setAria = function(trigger, index) {
     content.setAttribute('id', contentID);
   }
 
-  if (this.opts.overrideStatic) {
+  if (this.opts.reflectStatic) {
     initExpanded = trigger.getAttribute('aria-expanded') || initExpanded;
     initHidden = content.getAttribute('aria-hidden') || initHidden;
   }
