@@ -52,11 +52,25 @@ describe('accordion', function() {
       '<div class="accordion-2">' +
         '<button>Accordion 2 button</button>' +
         '<div>Some content</div>' +
+      '</div>' +
+      '<div class="accordion-3">' +
+        '<ul>' +
+          '<li>' +
+            '<button aria-expanded="true"></button>' +
+            '<div aria-hidden="false">Some content</div>' +
+          '</li>' +
+          '<li>' +
+            '<button></button>' +
+            '<div>Some content</div>' +
+          '</li>' +
+        '</ul>' +
       '</div>';
     var elm1 = document.querySelector('.accordion-1');
     var elm2 = document.querySelector('.accordion-2');
+    var elm3 = document.querySelector('.accordion-3');
     this.accordion = new Accordion(elm1, {}, {collapseOthers: true});
     this.accordion2 = new Accordion(elm2, {}, {contentPrefix: 'second'});
+    this.accordion3 = new Accordion(elm3, {}, {reflectStatic: true});
   });
 
   it('should find triggers on init', function() {
@@ -116,6 +130,30 @@ describe('accordion', function() {
       this.accordion2.expand(trigger2);
       expect(isOpen(trigger2)).to.be.true;
       expect(isOpen(trigger1)).to.be.false;
+    });
+  });
+
+  describe('page with statically-rendered static attributes', function() {
+    it('should have two triggers when it initializes', function() {
+      expect(this.accordion3.triggers.length).to.equal(2);
+    });
+
+    it('the first trigger should be open', function() {
+      var accordion3 = document.querySelector('.accordion-3');
+      var trigger = this.accordion3.triggers[0];
+      var content = accordion3.querySelector('#accordion-content-0');
+      expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+      expect(trigger.getAttribute('aria-controls')).to.equal('accordion-content-0');
+      expect(content.getAttribute('aria-hidden')).to.equal('false');
+    });
+
+    it('the second trigger should not be open', function() {
+      var accordion3 = document.querySelector('.accordion-3');
+      var trigger = this.accordion3.triggers[1];
+      var content = accordion3.querySelector('#accordion-content-1');
+      expect(trigger.getAttribute('aria-expanded')).to.equal('false');
+      expect(trigger.getAttribute('aria-controls')).to.equal('accordion-content-1');
+      expect(content.getAttribute('aria-hidden')).to.equal('true');
     });
   });
 });

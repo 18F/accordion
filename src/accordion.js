@@ -6,7 +6,8 @@ var defaultOpts = {
   collapseOthers: false,
   customHiding: false,
   contentPrefix: 'accordion',
-  openFirst: false
+  openFirst: false,
+  reflectStatic: false
 };
 
 var defaultSelectors = {
@@ -63,6 +64,8 @@ Accordion.prototype.findTriggers = function() {
 Accordion.prototype.setAria = function(trigger, index) {
   var content = trigger.nextElementSibling;
   var contentID;
+  var initExpanded = 'false';
+  var initHidden = 'true';
 
   if (content.hasAttribute('id')) {
     contentID = content.getAttribute('id');
@@ -71,9 +74,14 @@ Accordion.prototype.setAria = function(trigger, index) {
     content.setAttribute('id', contentID);
   }
 
+  if (this.opts.reflectStatic) {
+    initExpanded = trigger.getAttribute('aria-expanded') || initExpanded;
+    initHidden = content.getAttribute('aria-hidden') || initHidden;
+  }
+
   trigger.setAttribute('aria-controls', contentID);
-  trigger.setAttribute('aria-expanded', 'false');
-  content.setAttribute('aria-hidden', 'true');
+  trigger.setAttribute('aria-expanded', initExpanded);
+  content.setAttribute('aria-hidden', initHidden);
   this.setStyles(content);
 };
 
