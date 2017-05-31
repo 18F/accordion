@@ -5,7 +5,7 @@
     "Josh Carp <joshua.carp@gsa.gov>",
     "Noah Manger <noah.manger@gsa.gov"
   ],
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple, accessible, ARIA accordion",
   "repository": {
     "type": "git",
